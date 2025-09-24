@@ -1,0 +1,33 @@
+body{
+  margin:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background-color:#08D9D6;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
+#quizContainer{
+  background-color:#252A34;
+  color:white;
+  border-radius:25px;
+  padding:30px;
+  width:500px;
+  text-align:center;
+}
+
+button{
+  margin:10px;
+  padding:10px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  background-color: lightblue;
+  border:none;
+  transition: 0.3s;
+}
+
+button:hover{
+  background-color: #0ea5e9;
+  color:white;
+}

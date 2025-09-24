@@ -1,0 +1,51 @@
+div{
+    height: 520px;
+    width: 580px;
+    background-color: #252A34;
+    border-radius:95px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 50px;
+    align-items: center;
+
+}
+
+body{
+    margin: 0;
+      height: 100vh; 
+      display: flex;
+      justify-content: center; 
+      align-items: center;     
+      background-color: #08D9D6;
+       background-image: url(img/bag.jpg) ; 
+       background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+button{
+    width: 450px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    height: 35px;
+    border-radius: 12px;
+    font-family: 'Aptos';
+    cursor: pointer;
+    background-color: #EAEAEA;
+     transition: all 0.3s ease;
+}
+button:hover {
+  background: #0ea5e9;       
+  color: white;              
+  transform: scale(1.08);    
+  box-shadow: 0px 3px 10px rgba(14, 165, 233, 0.6);
+}
+input{
+    width: 350px;
+    height: 15px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-family:'Aptos ';
+    padding: 10px;
+}
+
+
