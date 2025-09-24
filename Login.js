@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const username = usernameInput.value.trim();
     if (username) {
       localStorage.setItem("username", username);
-      window.location.href = "Welcome_user.html";
+      window.location.href = "welcome_user.html";
     } else {
       alert("Please enter your username!");
     }
