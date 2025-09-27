@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const quizContainer = document.getElementById("quizContainer");
   const topicHeading = document.getElementById("topicName");
-  topicHeading.textContent = `Topic: ${topicName}`;
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const feedbackEl = document.getElementById("feedback");
+  const nextBtn = document.getElementById("nextBtn");
+  const timerProgress = document.getElementById("timerProgress");
 
-  let questionEl = document.getElementById("question");
-  let optionsEl = document.getElementById("options");
-  let timerEl = document.getElementById("timer");
-  let feedbackEl = document.getElementById("feedback");
-  let nextBtn = document.getElementById("nextBtn");
+  topicHeading.textContent = `Topic: ${topicName}`;
 
   const questionsData = {
     "Science": [
@@ -51,19 +51,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let questions = questionsData[topicName];
   let currentIndex = 0;
-  let timer;
-  let timeLeft = 10;
   let score = 0;
+  let timeLeft = 10;
+  let timer;
 
   function startQuiz() {
-    // Reset variables
     currentIndex = 0;
     score = 0;
     showQuestion();
   }
 
   function showQuestion() {
-    if (currentIndex >= questions.length) {
+    if(currentIndex >= questions.length){
       showResult();
       return;
     }
@@ -77,17 +76,18 @@ document.addEventListener("DOMContentLoaded", function () {
     q.options.forEach(option => {
       const btn = document.createElement("button");
       btn.textContent = option;
-      btn.addEventListener("click", () => checkAnswer(option, q.answer));
+      btn.addEventListener("click", () => checkAnswer(option, q.answer, btn));
       optionsEl.appendChild(btn);
     });
 
-    // Timer
+    // Timer bar
     timeLeft = 10;
-    timerEl.textContent = `Time Left: ${timeLeft}s`;
+    timerProgress.style.width = "100%";
     clearInterval(timer);
     timer = setInterval(() => {
       timeLeft--;
-      timerEl.textContent = `Time Left: ${timeLeft}s`;
+      timerProgress.style.width = (timeLeft/10*100) + "%";
+
       if(timeLeft <= 0){
         clearInterval(timer);
         feedbackEl.textContent = `Time's up! Correct answer: ${q.answer}`;
@@ -97,60 +97,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1000);
   }
 
-  function checkAnswer(selected, correct) {
+  function checkAnswer(selected, correct, btn) {
     clearInterval(timer);
     if(selected === correct){
       feedbackEl.textContent = "Correct!";
       score++;
+      btn.style.backgroundColor = "green";
     } else {
       feedbackEl.textContent = `Wrong! Correct answer: ${correct}`;
+      btn.style.backgroundColor = "red";
     }
     disableOptions();
     nextBtn.style.display = "inline-block";
   }
 
-  function disableOptions() {
+  function disableOptions(){
     const buttons = optionsEl.querySelectorAll("button");
     buttons.forEach(btn => btn.disabled = true);
   }
 
-  function showResult() {
+  function showResult(){
     quizContainer.innerHTML = `
       <h2>Quiz Completed!</h2>
       <p>Your Score: ${score} / ${questions.length}</p>
       <button id="restartBtn">Restart Quiz</button>
       <button id="exitBtn">Exit to Home</button>
     `;
-
-    document.getElementById("restartBtn").addEventListener("click", () => {
-      // Restore original quiz structure
-      quizContainer.innerHTML = `
-        <h2 id="topicName">Topic: ${topicName}</h2>
-        <p id="question"></p>
-        <div id="options"></div>
-        <p id="feedback"></p>
-        <p id="timer"></p>
-        <button id="nextBtn" style="display:none;">Next</button>
-      `;
-
-      // Re-select elements
-      questionEl = document.getElementById("question");
-      optionsEl = document.getElementById("options");
-      timerEl = document.getElementById("timer");
-      feedbackEl = document.getElementById("feedback");
-      nextBtn = document.getElementById("nextBtn");
-
-      nextBtn.addEventListener("click", () => {
-        currentIndex++;
-        showQuestion();
-      });
-
-      startQuiz();
-    });
-
-    document.getElementById("exitBtn").addEventListener("click", () => {
-      window.location.href = "Topic.html";
-    });
+    document.getElementById("restartBtn").addEventListener("click", startQuiz);
+    document.getElementById("exitBtn").addEventListener("click", () => window.location.href="Topic.html");
   }
 
   nextBtn.addEventListener("click", () => {
@@ -158,6 +132,5 @@ document.addEventListener("DOMContentLoaded", function () {
     showQuestion();
   });
 
-  // Start the quiz
   startQuiz();
 });
